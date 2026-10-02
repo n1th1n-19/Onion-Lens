@@ -1,6 +1,5 @@
-<p align="center"><img src="icons/icon128.png" width="96" alt="Onion Lens logo"></p>
+<p align="center"><img src="logo/logo-wordmark.svg" width="420" alt="Onion Lens"></p>
 
-<h1 align="center">Onion Lens</h1>
 <p align="center"><b>Color picker &amp; screenshot tool for every browser</b><br>
 Chrome · Edge · Brave · Opera · Vivaldi · Firefox · Safari</p>
 
@@ -116,7 +115,8 @@ popup.html/css/js  toolbar popup
 editor.html/css/js screenshot editor
 db.js              tiny IndexedDB store that hands screenshots to the editor
 theme.css          design tokens and base styles
-fonts/  icons/     bundled assets
+fonts/  icons/     bundled assets (icons rendered from logo/logo.svg)
+logo/              logo.svg, wordmark, 512 px PNG for store listings
 ```
 
 ### How it works
