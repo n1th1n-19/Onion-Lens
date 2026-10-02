@@ -3,6 +3,9 @@
 <p align="center"><b>Color picker &amp; screenshot tool for every browser</b><br>
 Chrome · Edge · Brave · Opera · Vivaldi · Firefox · Safari</p>
 
+<p align="center"><a href="docs/demo.mp4"><img src="docs/demo.gif" width="960" alt="Onion Lens demo: pick a color, see it in 10 formats, auto-fix contrast, screenshot an area and extract its palette"></a><br>
+<sub>Click the animation to watch the full video with sound.</sub></p>
+
 ---
 
 Onion Lens is a browser extension that picks colors from any web page and captures screenshots. You can grab any pixel, convert it between 10 color formats, build and export palettes, and check accessibility. You can also capture the visible area, the full page, a dragged region or a single element, then annotate the image, copy it or save it.
