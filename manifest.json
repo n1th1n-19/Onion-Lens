@@ -15,7 +15,7 @@
     "scripts": ["db.js", "background.js"]
   },
   "permissions": ["activeTab", "scripting", "storage", "contextMenus", "clipboardWrite", "downloads"],
-  "web_accessible_resources": [{ "resources": ["fonts/*.woff2"], "matches": ["<all_urls>"] }],
+  "web_accessible_resources": [{ "resources": ["fonts/*.woff2", "logo/logo.svg"], "matches": ["<all_urls>"] }],
   "commands": {
     "_execute_action": { "suggested_key": { "default": "Alt+Shift+X" }, "description": "Open Onion Lens" },
     "pick-color": { "suggested_key": { "default": "Alt+Shift+C" }, "description": "Pick a color from the page" },

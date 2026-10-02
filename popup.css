@@ -9,6 +9,14 @@ body { width: 400px; }
 h3 { margin: 12px 0 6px; font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
 p { margin: 8px 0 0; }
 
+/* brand */
+.brandbar { display: flex; align-items: center; gap: 7px; padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--panel); }
+.brandbar img { width: 20px; height: 20px; }
+.brandbar b { font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; }
+.w1 { color: var(--accent); }
+.w2 { color: var(--spark); }
+#version { margin-left: auto; font-size: 10.5px; }
+
 /* header */
 header { display: flex; gap: 12px; padding: 12px; align-items: center; border-bottom: 1px solid var(--line); }
 .head-main { flex: 1; min-width: 0; display: grid; gap: 6px; }

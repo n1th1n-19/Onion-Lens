@@ -7,7 +7,10 @@ body { display: flex; flex-direction: column; }
 
 .bar { display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 8px; font-size: 14px; }
-.brand img { width: 22px; height: 22px; }
+.brand img { width: 24px; height: 24px; }
+.brand b { font-weight: 800; letter-spacing: -.01em; }
+.w1 { color: var(--accent); }
+.w2 { color: var(--spark); }
 .tools { display: flex; align-items: center; gap: 3px; flex: 1; justify-content: center; flex-wrap: wrap; }
 .tools button, .actions button { display: flex; align-items: center; gap: 6px; height: 32px; }
 .tools button[data-tool] { width: 34px; padding: 0; justify-content: center; }
@@ -27,7 +30,8 @@ body { display: flex; flex-direction: column; }
 #chip { position: absolute; pointer-events: none; line-height: 1.4; background: var(--bg); border: 1px solid var(--line);
   border-radius: 6px; padding: 3px 8px; display: flex; gap: 6px; align-items: center; white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
 #chip i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--line); }
-#empty { align-self: center; }
+#empty { align-self: center; display: grid; justify-items: center; gap: 12px; text-align: center; max-width: 340px; }
+#empty img { width: 96px; height: 96px; opacity: .9; }
 .text-input { position: absolute; background: rgba(30,31,34,.85); border: 1px dashed var(--accent); color: #fff; font: 600 16px 'Inter', sans-serif; padding: 2px 4px; min-width: 120px; line-height: 1.3; }
 
 aside { width: 260px; flex: none; border-left: 1px solid var(--line); background: var(--panel); padding: 12px 14px; overflow: auto; }

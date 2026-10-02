@@ -365,6 +365,7 @@ function wire() {
   const stored = await api.storage.local.get(Object.keys(state));
   Object.assign(state, stored, { settings: { ...DEFAULT_SETTINGS, ...stored.settings } });
   color = C.parse(state.current) || C.parse('#d29bf5');
+  $('#version').textContent = 'v' + api.runtime.getManifest().version;
   wire();
   applySettings();
   render();

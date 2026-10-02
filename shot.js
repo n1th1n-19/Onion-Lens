@@ -13,7 +13,8 @@
     * { box-sizing: border-box; }
     .hint { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); background: #1e1f22; color: #8b8e95;
             border: 1px solid #3d3f45; border-radius: 999px; padding: 5px 14px; font: 12px system-ui, sans-serif;
-            pointer-events: none; white-space: nowrap; z-index: 3; }
+            pointer-events: none; white-space: pre; z-index: 3; display: flex; align-items: center; gap: 4px; }
+    .hint img { width: 14px; height: 14px; margin-right: 4px; }
     .hint b { color: #d29bf5; font-weight: 600; }
     .tag { position: fixed; background: #d29bf5; color: #1e1f22; border-radius: 4px; padding: 2px 7px;
            font: 600 11px/1.4 OnionMono, ui-monospace, monospace; pointer-events: none; white-space: nowrap; }
@@ -35,6 +36,7 @@
   const div = (className, props = {}) => Object.assign(document.createElement('div'), { className }, props);
   const hint = text => {
     const d = div('hint');
+    d.append(Object.assign(document.createElement('img'), { src: api.runtime.getURL('logo/logo.svg'), alt: '', onerror() { this.remove(); } }));
     text.split(/<b>(.*?)<\/b>/).forEach((part, i) => d.append(i % 2 ? Object.assign(document.createElement('b'), { textContent: part }) : part));
     return d;
   };

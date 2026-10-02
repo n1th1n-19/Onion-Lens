@@ -18,7 +18,8 @@
              border-radius: 6px; padding: 3px 8px; font: 12px/1.4 OnionMono, ui-monospace, monospace; white-space: nowrap; }
     .label i { width: 12px; height: 12px; border-radius: 3px; border: 1px solid #3d3f45; }
     .hint { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); background: #1e1f22; color: #8b8e95;
-            border: 1px solid #3d3f45; border-radius: 999px; padding: 5px 14px; font: 12px system-ui, sans-serif; pointer-events: none; }
+            border: 1px solid #3d3f45; border-radius: 999px; padding: 5px 14px; font: 12px system-ui, sans-serif; pointer-events: none; display: flex; align-items: center; gap: 4px; white-space: pre; }
+    .hint img { width: 14px; height: 14px; margin-right: 4px; }
     .hint b { color: #d29bf5; font-weight: 600; }
     .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center;
              background: #d29bf5; color: #1e1f22; border-radius: 999px; padding: 7px 16px;
@@ -72,7 +73,7 @@
       Object.assign(document.createElement('style'), { textContent: STYLE }),
       mk('div', 'ov'),
       mk('div', 'loupe', canvas, mk('div', 'label', mk('i'), mk('span'))),
-      mk('div', 'hint', b('Click'), ' pick · ', b('Shift+click'), ' pick more · ', b('Arrows'), ' nudge · ', b('Wheel'), ' zoom · ', b('Esc'), ' exit'));
+      mk('div', 'hint', Object.assign(document.createElement('img'), { src: api.runtime.getURL('logo/logo.svg'), alt: '', onerror() { this.remove(); } }), b('Click'), ' pick · ', b('Shift+click'), ' pick more · ', b('Arrows'), ' nudge · ', b('Wheel'), ' zoom · ', b('Esc'), ' exit'));
     document.documentElement.append(host);
     const ov = root.querySelector('.ov'), loupe = root.querySelector('.loupe');
     const lc = root.querySelector('canvas').getContext('2d');
