@@ -4,29 +4,81 @@
   "short_name": "Onion Lens",
   "version": "1.0.0",
   "description": "Pick any color on screen, convert between 10 formats, build palettes, check contrast, and capture visible, full-page, area or element screenshots.",
-  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "action": {
     "default_title": "Onion Lens",
     "default_popup": "popup.html",
-    "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png" }
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
   },
   "background": {
     "service_worker": "background.js",
-    "scripts": ["db.js", "background.js"]
+    "scripts": [
+      "db.js",
+      "background.js"
+    ]
   },
-  "permissions": ["activeTab", "scripting", "storage", "contextMenus", "clipboardWrite", "downloads"],
-  "web_accessible_resources": [{ "resources": ["fonts/*.woff2", "logo/logo.svg"], "matches": ["<all_urls>"] }],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "contextMenus",
+    "clipboardWrite",
+    "downloads"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/*.woff2",
+        "logo/logo.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
   "commands": {
-    "_execute_action": { "suggested_key": { "default": "Alt+Shift+X" }, "description": "Open Onion Lens" },
-    "pick-color": { "suggested_key": { "default": "Alt+Shift+C" }, "description": "Pick a color from the page" },
-    "shot-area": { "suggested_key": { "default": "Alt+Shift+S" }, "description": "Screenshot a selected area" },
-    "shot-full": { "suggested_key": { "default": "Alt+Shift+F" }, "description": "Screenshot the full page" }
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "Open Onion Lens"
+    },
+    "pick-color": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Pick a color from the page"
+    },
+    "shot-area": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Screenshot a selected area"
+    },
+    "shot-full": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Screenshot the full page"
+    }
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "onion-lens@onion-color",
       "strict_min_version": "121.0",
-      "data_collection_permissions": { "required": ["none"] }
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
     }
   }
 }

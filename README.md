@@ -91,10 +91,29 @@ Build the generated Xcode project, then enable the extension under **Safari → 
 ## Package for stores
 
 ```sh
-mkdir -p dist && zip -r dist/onion-lens-1.0.0.zip manifest.json *.js *.html *.css LICENSE fonts icons logo/logo.svg -x test.js
+./pack.sh        # -> dist/onion-lens-<version>.zip
 ```
 
 You can upload the same zip to the Chrome Web Store, Microsoft Edge Add-ons, Opera add-ons and Firefox AMO.
+
+## Releases
+
+Two GitHub Actions workflows:
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads the zip as a build artifact |
+| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** | bumps the version → tests → packs → lints → commits `chore: release vX.Y.Z` → tags → publishes a GitHub Release with the zip and auto-generated notes |
+
+When you run **Release**, pick `patch`, `minor` or `major`, or type an exact version. It fails before changing anything if the tests or lint fail, the version is badly formatted, or the tag already exists.
+
+You can also start it from the terminal:
+
+```sh
+gh workflow run release.yml -f bump=minor
+```
+
+> If `main` is branch-protected, allow GitHub Actions to push, or the commit/tag step will be rejected.
 
 ## Development
 
@@ -107,6 +126,7 @@ npx web-ext lint --ignore-files test.js        # Firefox / AMO lint
 
 ```
 manifest.json      MV3 manifest shared by all browsers
+pack.sh            builds the store zip (used locally and by CI)
 background.js      capture, script injection, tile stitching, downloads, menus, shortcuts
 colors.js          color parsing, conversions, harmonies, contrast, CVD simulation, palette extraction
 picker.js          on-page eyedropper overlay (injected on demand)

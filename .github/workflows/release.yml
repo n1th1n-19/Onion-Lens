@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      version:
+        description: Exact version instead (e.g. 2.0.0) — overrides bump
+        required: false
+
+permissions:
+  contents: write
+
+concurrency: release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Bump manifest version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+          EXACT: ${{ inputs.version }}
+        run: |
+          version=$(node -e '
+            const fs = require("fs"), m = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
+            let v = process.env.EXACT.trim();
+            if (v && !/^\d+\.\d+\.\d+$/.test(v)) { console.error("version must look like 1.2.3"); process.exit(1); }
+            if (!v) {
+              const [a, b, c] = m.version.split(".").map(Number);
+              v = { major: `${a + 1}.0.0`, minor: `${a}.${b + 1}.0`, patch: `${a}.${b}.${c + 1}` }[process.env.BUMP];
+            }
+            m.version = v;
+            fs.writeFileSync("manifest.json", JSON.stringify(m, null, 2) + "\n");
+            console.log(v);
+          ')
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "::error::Tag v$version already exists"; exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Unit tests
+        run: node test.js
+
+      - name: Pack
+        id: pack
+        run: echo "zip=$(./pack.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: Lint packed extension
+        run: npx --yes web-ext@8 lint --source-dir "${{ steps.pack.outputs.zip }}"
+
+      - name: Commit and tag
+        env:
+          V: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: release v$V"
+          git tag "v$V"
+          git push origin HEAD "v$V"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          V: ${{ steps.version.outputs.version }}
+        run: gh release create "v$V" "${{ steps.pack.outputs.zip }}" --title "Onion Lens v$V" --generate-notes
