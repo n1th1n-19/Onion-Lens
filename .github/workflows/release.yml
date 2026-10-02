@@ -43,15 +43,14 @@ jobs:
         run: node test.js
 
       - name: Pack
-        id: pack
-        run: echo "zip=$(./pack.sh)" >> "$GITHUB_OUTPUT"
+        run: ./pack.sh
 
-      - name: Lint packed extension
-        run: npx --yes web-ext@8 lint --source-dir "${{ steps.pack.outputs.zip }}"
+      - name: Lint Firefox package (AMO rules)
+        run: npx --yes web-ext@8 lint --source-dir dist/*-firefox.zip
 
       # gh creates the tag on this commit server-side; nothing is pushed to main
       - name: Tag and publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           V: ${{ steps.version.outputs.version }}
-        run: gh release create "v$V" "${{ steps.pack.outputs.zip }}" --target "$GITHUB_SHA" --title "Onion Lens v$V" --generate-notes
+        run: gh release create "v$V" dist/*.zip --target "$GITHUB_SHA" --title "Onion Lens v$V" --generate-notes

@@ -19,14 +19,13 @@ jobs:
         run: node test.js
 
       - name: Pack
-        id: pack
-        run: echo "zip=$(./pack.sh)" >> "$GITHUB_OUTPUT"
+        run: ./pack.sh
 
       - name: Lint packed extension (Firefox / AMO rules)
-        run: npx --yes web-ext@8 lint --source-dir "${{ steps.pack.outputs.zip }}"
+        run: npx --yes web-ext@8 lint --source-dir dist/*-firefox.zip
 
       - uses: actions/upload-artifact@v4
         with:
           name: onion-lens
-          path: ${{ steps.pack.outputs.zip }}
+          path: dist/*.zip
 

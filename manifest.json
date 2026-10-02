@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Onion Lens - Color Picker & Screenshot",
   "short_name": "Onion Lens",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pick any color on screen, convert between 10 formats, build palettes, check contrast, and capture visible, full-page, area or element screenshots.",
   "icons": {
     "16": "icons/icon16.png",
@@ -73,12 +73,15 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "onion-lens@onion-color",
-      "strict_min_version": "121.0",
+      "strict_min_version": "140.0",
       "data_collection_permissions": {
         "required": [
           "none"
         ]
       }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
     }
   }
 }

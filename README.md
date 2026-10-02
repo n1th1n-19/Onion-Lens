@@ -81,7 +81,7 @@ There's no build step. Load the folder directly.
 2. Turn on **Developer mode**.
 3. Click **Load unpacked** and select this folder.
 
-### Firefox (121+)
+### Firefox (140+, Android 142+)
 1. Open `about:debugging#/runtime/this-firefox`.
 2. Click **Load Temporary Add-on…** and select `manifest.json`.
 
@@ -94,10 +94,12 @@ Build the generated Xcode project, then enable the extension under **Safari → 
 ## Package for stores
 
 ```sh
-./pack.sh        # -> dist/onion-lens-<version>.zip
+./pack.sh
+# -> dist/onion-lens-<version>-chrome.zip   Chrome Web Store, Edge Add-ons, Opera add-ons
+# -> dist/onion-lens-<version>-firefox.zip  Firefox AMO
 ```
 
-You can upload the same zip to the Chrome Web Store, Microsoft Edge Add-ons, Opera add-ons and Firefox AMO.
+Both zips come from the one `manifest.json`. Each drops the keys the other browser warns about. The Chrome zip has no `background.scripts` or `browser_specific_settings`, and the Firefox zip has no `background.service_worker`.
 
 ## Releases
 
@@ -105,8 +107,8 @@ You can upload the same zip to the Chrome Web Store, Microsoft Edge Add-ons, Ope
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads the zip as a build artifact |
-| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** on `main` | tests → packs → lints → tags `vX.Y.Z` → publishes a GitHub Release with the zip and auto-generated notes |
+| [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads both zips as a build artifact |
+| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** on `main` | tests → packs → lints → tags `vX.Y.Z` → publishes a GitHub Release with both zips and auto-generated notes |
 
 To cut a release:
 
@@ -126,7 +128,7 @@ npx web-ext lint --ignore-files test.js        # Firefox / AMO lint
 
 ```
 manifest.json      MV3 manifest shared by all browsers
-pack.sh            builds the store zip (used locally and by CI)
+pack.sh            builds the Chrome and Firefox store zips (used locally and by CI)
 background.js      capture, script injection, tile stitching, downloads, menus, shortcuts
 colors.js          color parsing, conversions, harmonies, contrast, CVD simulation, palette extraction
 picker.js          on-page eyedropper overlay (injected on demand)
