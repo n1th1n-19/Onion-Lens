@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <title>Onion Lens</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-pipette" viewBox="0 0 24 24"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1Z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-page" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M12 12v6M9 15l3 3 3-3"/></symbol>
+    <symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></symbol>
+    <symbol id="i-element" viewBox="0 0 24 24"><path d="M5 3a2 2 0 0 0-2 2M19 3a2 2 0 0 1 2 2M5 21a2 2 0 0 1-2-2M9 3h1M9 21h2M14 3h1M3 9v1M21 9v2M3 14v1"/><path d="m12 12 4 10 1.7-5.3L23 15Z"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="m16 3 4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24"><path d="m15 4-1 1M19 8l1-1M14 9l-9 9a1.4 1.4 0 0 0 2 2l9-9M17 2v2M22 7h-2M20 12v-2M12 2h2"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  </svg>
+
+  <header>
+    <div id="swatch" class="swatch big checker" title="Current color"><i></i></div>
+    <div class="head-main">
+      <input id="colorText" class="mono" spellcheck="false" autocomplete="off" aria-label="Color value (any CSS color)">
+      <div class="row">
+        <input type="color" id="native" title="Open color dialog">
+        <input type="range" id="alpha" min="0" max="100" title="Opacity" aria-label="Opacity">
+        <span id="alphaOut" class="mono muted"></span>
+      </div>
+      <span id="name" class="muted"></span>
+    </div>
+    <div class="head-actions">
+      <button id="pick" class="primary" title="Pick color from page (Alt+Shift+C)"><svg class="icon"><use href="#i-pipette"/></svg></button>
+      <button id="fav" title="Save to Favorites"><svg class="icon"><use href="#i-star"/></svg></button>
+      <button id="gear" title="Settings" aria-expanded="false"><svg class="icon"><use href="#i-gear"/></svg></button>
+    </div>
+  </header>
+
+  <section id="settings" hidden>
+    <label>Copy format <select id="setFormat"></select></label>
+    <label>Picker sample
+      <select id="setSample"><option value="1">1 × 1 px</option><option value="3">3 × 3 average</option><option value="5">5 × 5 average</option></select>
+    </label>
+    <label>Theme
+      <select id="setTheme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select>
+    </label>
+    <label class="check"><input type="checkbox" id="setAutoCopy"> Copy on pick</label>
+    <label class="check"><input type="checkbox" id="setUpper"> Uppercase HEX</label>
+  </section>
+
+  <nav role="tablist">
+    <button data-tab="formats">Formats</button>
+    <button data-tab="harmony">Harmony</button>
+    <button data-tab="contrast">Contrast</button>
+    <button data-tab="page">Page</button>
+    <button data-tab="saved">Saved</button>
+    <button data-tab="shot">Shot</button>
+  </nav>
+
+  <main>
+    <section data-panel="formats">
+      <div id="formatList"></div>
+      <p class="muted small">Click any value to copy. Highlighted = default format (⚙).</p>
+    </section>
+
+    <section data-panel="harmony" hidden>
+      <div id="harmonies"></div>
+      <h3>Gradient</h3>
+      <div class="row">
+        <input type="color" id="gradNative" title="Second color">
+        <input id="gradB" class="mono grow" value="#e8875b" spellcheck="false" aria-label="Second color">
+        <select id="gradType"><option value="linear">Linear</option><option value="radial">Radial</option><option value="conic">Conic</option></select>
+      </div>
+      <div class="row">
+        <input type="range" id="gradAngle" min="0" max="360" value="90" class="grow" aria-label="Angle">
+        <span id="gradAngleOut" class="mono muted">90°</span>
+      </div>
+      <div id="gradPreview" class="preview"></div>
+      <div id="gradSteps" class="swatches"></div>
+      <button id="gradCopy" class="full"><svg class="icon"><use href="#i-copy"/></svg> Copy CSS</button>
+    </section>
+
+    <section data-panel="contrast" hidden>
+      <div class="row">
+        <span class="muted">Background</span>
+        <input type="color" id="bgNative">
+        <input id="bgText" class="mono grow" spellcheck="false" aria-label="Background color">
+        <button id="swap" title="Swap text / background"><svg class="icon"><use href="#i-swap"/></svg></button>
+      </div>
+      <div id="contrastPreview" class="preview text">
+        <span class="big-text">Large heading</span>
+        <span>Body text — the quick brown fox jumps over the lazy dog.</span>
+      </div>
+      <div class="ratio-row"><b id="ratio" class="mono"></b><div id="badges"></div></div>
+      <button id="fix" class="full"><svg class="icon"><use href="#i-wand"/></svg> Fix to pass AA (4.5:1)</button>
+      <h3>Color vision simulation</h3>
+      <div id="vision"></div>
+    </section>
+
+    <section data-panel="page" hidden>
+      <div class="two">
+        <button id="inspect"><svg class="icon"><use href="#i-search"/></svg> Inspect element</button>
+        <button id="scan" class="primary"><svg class="icon"><use href="#i-scan"/></svg> Scan page colors</button>
+      </div>
+      <p id="pageInfo" class="muted small">Inspect shows an element's text, background, border colors and contrast. Scan lists every color the page uses — click one to find it on the page.</p>
+      <div id="pageColors" class="swatches"></div>
+      <div class="two" id="pageActions" hidden>
+        <button id="clearFind">Clear highlights</button>
+        <button id="savePage">Save as palette</button>
+      </div>
+    </section>
+
+    <section data-panel="saved" hidden>
+      <div class="row between"><h3>History</h3><button id="clearHistory" class="ghost small">Clear</button></div>
+      <div id="history" class="swatches"></div>
+      <p id="historyEmpty" class="muted small">Picked colors show up here.</p>
+      <h3>Palettes</h3>
+      <div id="palettes"></div>
+      <div class="row">
+        <input id="newName" class="grow" placeholder="New palette name" aria-label="New palette name">
+        <button id="newPalette">Create</button>
+      </div>
+    </section>
+
+    <section data-panel="shot" hidden>
+      <div class="shots">
+        <button data-shot="visible"><svg class="icon"><use href="#i-monitor"/></svg><b>Visible</b><small>What's on screen</small></button>
+        <button data-shot="full"><svg class="icon"><use href="#i-page"/></svg><b>Full page</b><small>Top to bottom</small></button>
+        <button data-shot="area"><svg class="icon"><use href="#i-crop"/></svg><b>Select area</b><small>Drag to crop</small></button>
+        <button data-shot="element"><svg class="icon"><use href="#i-element"/></svg><b>Element</b><small>One div / container</small></button>
+      </div>
+      <h3>After capture</h3>
+      <div class="seg" id="shotAction">
+        <button data-value="editor">Edit</button>
+        <button data-value="copy">Copy to clipboard</button>
+        <button data-value="save">Save picture</button>
+      </div>
+      <div class="opts">
+        <label>Delay <select id="shotDelay"><option value="0">None</option><option value="3">3 s</option><option value="5">5 s</option><option value="10">10 s</option></select></label>
+        <label>Format <select id="shotFormat"><option value="png">PNG</option><option value="jpeg">JPEG</option></select></label>
+        <label id="qualityWrap">Quality <input type="number" id="jpegQuality" min="10" max="100" step="1"></label>
+        <label class="check"><input type="checkbox" id="saveAs"> Ask where to save</label>
+      </div>
+      <p class="muted small">Shortcuts: Alt+Shift+S area · Alt+Shift+F full page. Saved to Downloads/Onion Lens.</p>
+    </section>
+  </main>
+
+  <div id="toast" role="status"></div>
+  <script src="colors.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

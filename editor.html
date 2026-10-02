@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <title>Onion Lens — Screenshot</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="t-crop" viewBox="0 0 24 24"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></symbol>
+    <symbol id="t-rect" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/></symbol>
+    <symbol id="t-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M9 5h10v10"/></symbol>
+    <symbol id="t-pen" viewBox="0 0 24 24"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></symbol>
+    <symbol id="t-mark" viewBox="0 0 24 24"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></symbol>
+    <symbol id="t-text" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+    <symbol id="t-blur" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6"/><rect x="15" y="3" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/><rect x="3" y="15" width="6" height="6"/><rect x="15" y="15" width="6" height="6"/></symbol>
+    <symbol id="t-drop" viewBox="0 0 24 24"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z"/></symbol>
+    <symbol id="t-undo" viewBox="0 0 24 24"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></symbol>
+    <symbol id="t-redo" viewBox="0 0 24 24"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></symbol>
+    <symbol id="t-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="t-save" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="t-open" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+  </svg>
+
+  <header class="bar">
+    <div class="brand"><img src="icons/icon32.png" alt=""><b>Onion Lens</b></div>
+    <div class="tools" role="toolbar" aria-label="Tools">
+      <button data-tool="crop" title="Crop (C)"><svg class="icon"><use href="#t-crop"/></svg></button>
+      <button data-tool="rect" title="Rectangle (R)"><svg class="icon"><use href="#t-rect"/></svg></button>
+      <button data-tool="arrow" title="Arrow (A)"><svg class="icon"><use href="#t-arrow"/></svg></button>
+      <button data-tool="pen" title="Pen (P)"><svg class="icon"><use href="#t-pen"/></svg></button>
+      <button data-tool="mark" title="Highlighter (H)"><svg class="icon"><use href="#t-mark"/></svg></button>
+      <button data-tool="text" title="Text (T)"><svg class="icon"><use href="#t-text"/></svg></button>
+      <button data-tool="blur" title="Pixelate / redact (B)"><svg class="icon"><use href="#t-blur"/></svg></button>
+      <button data-tool="drop" title="Eyedropper (I)"><svg class="icon"><use href="#t-drop"/></svg></button>
+      <span class="sep"></span>
+      <input type="color" id="ink" title="Annotation color">
+      <input type="range" id="size" min="1" max="40" value="6" title="Stroke size">
+      <span class="sep"></span>
+      <button id="undo" title="Undo (Ctrl+Z)"><svg class="icon"><use href="#t-undo"/></svg></button>
+      <button id="redo" title="Redo (Ctrl+Shift+Z)"><svg class="icon"><use href="#t-redo"/></svg></button>
+      <select id="zoom" title="Zoom"><option value="fit">Fit</option><option value="0.5">50%</option><option value="1">100%</option><option value="2">200%</option></select>
+    </div>
+    <div class="actions">
+      <button id="open" title="Open an image file (or paste / drop one)"><svg class="icon"><use href="#t-open"/></svg></button>
+      <button id="copy"><svg class="icon"><use href="#t-copy"/></svg> Copy</button>
+      <button id="savePng" class="primary"><svg class="icon"><use href="#t-save"/></svg> Save PNG</button>
+      <button id="saveJpg">JPEG</button>
+    </div>
+  </header>
+
+  <div id="banner" hidden></div>
+
+  <div class="layout">
+    <main id="stage">
+      <div id="wrap"><canvas id="view"></canvas><div id="chip" hidden></div></div>
+      <p id="empty" class="muted">No screenshot yet — take one from the Onion Lens popup, or paste / drop an image here.</p>
+    </main>
+    <aside>
+      <h3>Image</h3>
+      <dl id="info"></dl>
+      <h3>Palette from image</h3>
+      <div id="palette"></div>
+      <div class="row">
+        <select id="paletteSize"><option>5</option><option selected>8</option><option>12</option><option>16</option></select>
+        <button id="savePalette" class="grow">Save palette</button>
+      </div>
+      <p class="muted small">Click a color to use it as ink and copy it.</p>
+      <h3>Shortcuts</h3>
+      <p class="muted small mono keys">C crop · R rect · A arrow · P pen · H highlight · T text · B pixelate · I eyedropper · Esc none · Ctrl+Z / Ctrl+Shift+Z · Ctrl+C copy · Ctrl+S save</p>
+    </aside>
+  </div>
+
+  <input type="file" id="file" accept="image/*" hidden>
+  <div id="toast" role="status"></div>
+  <script src="colors.js"></script>
+  <script src="db.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>

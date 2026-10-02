@@ -1,0 +1,73 @@
+/* Onion Lens design tokens + base styles, shared by popup.html and editor.html. */
+@font-face { font-family: 'Inter'; src: url('fonts/inter.woff2') format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('fonts/jetbrains-mono.woff2') format('woff2'); font-weight: 100 800; font-display: swap; }
+
+:root, :root[data-theme="dark"] {
+  --bg: #1e1f22;
+  --panel: #2b2d31;
+  --raised: #35373c;
+  --line: #3d3f45;
+  --fg: #dcdde0;
+  --muted: #8b8e95;
+  --accent: #d29bf5;
+  --accent-fg: #1e1f22;
+  --code-bg: #2a2f24;
+  --code-fg: #a9d18e;
+  --spark: #e8875b;
+  --ok: #9ccc65;
+  --bad: #f28b82;
+  --check: #3a3c41;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f7f7f8; --panel: #ffffff; --raised: #eeeef1; --line: #dcdce1; --fg: #1f2024; --muted: #6b6e76;
+  --accent: #a95fe0; --accent-fg: #ffffff; --code-bg: #eef5e8; --code-fg: #3f7a1f; --spark: #d0662f;
+  --ok: #3f8f1f; --bad: #c4372c; --check: #d9d9de; color-scheme: light;
+}
+@media (prefers-color-scheme: light) {
+  :root[data-theme="system"] {
+    --bg: #f7f7f8; --panel: #ffffff; --raised: #eeeef1; --line: #dcdce1; --fg: #1f2024; --muted: #6b6e76;
+    --accent: #a95fe0; --accent-fg: #ffffff; --code-bg: #eef5e8; --code-fg: #3f7a1f; --spark: #d0662f;
+    --ok: #3f8f1f; --bad: #c4372c; --check: #d9d9de; color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 13px/1.45 'Inter', system-ui, sans-serif; font-feature-settings: 'tnum', 'cv11';
+}
+.mono, code, input.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; }
+code { background: var(--code-bg); color: var(--code-fg); padding: 1px 6px; border-radius: 4px; }
+[hidden] { display: none !important; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button {
+  cursor: pointer; background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  padding: 5px 10px; transition: background .12s, border-color .12s;
+}
+button:hover { background: var(--raised); }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: transparent; font-weight: 600; }
+button.primary:hover { filter: brightness(1.06); }
+button.ghost { background: none; border-color: transparent; }
+button.ghost:hover { background: var(--raised); }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+input:not([type]), input[type="text"], input[type="number"], select, textarea {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; min-width: 0;
+}
+input[type="range"] { accent-color: var(--accent); }
+input[type="checkbox"] { accent-color: var(--accent); }
+input[type="color"] {
+  width: 30px; height: 26px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: none; cursor: pointer;
+}
+.bad { border-color: var(--bad) !important; }
+.muted { color: var(--muted); }
+.checker { background: repeating-conic-gradient(var(--check) 0 25%, transparent 0 50%) 0 0 / 10px 10px; }
+.icon { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+#toast {
+  position: fixed; left: 50%; bottom: 12px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  background: var(--accent); color: var(--accent-fg); padding: 6px 14px; border-radius: 999px; font-weight: 600;
+  max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: .18s; z-index: 10;
+}
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
