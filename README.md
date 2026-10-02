@@ -98,22 +98,19 @@ You can upload the same zip to the Chrome Web Store, Microsoft Edge Add-ons, Ope
 
 ## Releases
 
-Two GitHub Actions workflows:
+`main` is protected by a ruleset. Changes go in through a pull request, CI (`build`) must pass, history stays linear, and force-pushes and branch deletion are blocked. Repo admins can bypass it.
 
 | Workflow | Trigger | What it does |
 |---|---|---|
 | [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads the zip as a build artifact |
-| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** | bumps the version → tests → packs → lints → commits `chore: release vX.Y.Z` → tags → publishes a GitHub Release with the zip and auto-generated notes |
+| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** on `main` | tests → packs → lints → tags `vX.Y.Z` → publishes a GitHub Release with the zip and auto-generated notes |
 
-When you run **Release**, pick `patch`, `minor` or `major`, or type an exact version. It fails before changing anything if the tests or lint fail, the version is badly formatted, or the tag already exists.
+To cut a release:
 
-You can also start it from the terminal:
+1. Open a PR that bumps `"version"` in `manifest.json` (for example `1.0.0` → `1.0.1`), and merge it once CI passes.
+2. Run **Release**, either from the Actions tab or with `gh workflow run release.yml`.
 
-```sh
-gh workflow run release.yml -f bump=minor
-```
-
-> If `main` is branch-protected, allow GitHub Actions to push, or the commit/tag step will be rejected.
+The Release workflow never pushes to `main`. It stops if that version is already released, or if the tests or lint fail.
 
 ## Development
 
