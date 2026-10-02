@@ -91,7 +91,7 @@ Build the generated Xcode project, then enable the extension under **Safari → 
 ## Package for stores
 
 ```sh
-zip -r onion-lens.zip . -x '.git/*' -x '.remember/*' -x 'test.js' -x '*.zip'
+mkdir -p dist && zip -r dist/onion-lens-1.0.0.zip manifest.json *.js *.html *.css LICENSE fonts icons logo/logo.svg -x test.js
 ```
 
 You can upload the same zip to the Chrome Web Store, Microsoft Edge Add-ons, Opera add-ons and Firefox AMO.
