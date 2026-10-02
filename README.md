@@ -95,8 +95,10 @@ Build the generated Xcode project, then enable the extension under **Safari → 
 
 ```sh
 ./pack.sh
-# -> dist/onion-lens-<version>-chrome.zip   Chrome Web Store, Edge Add-ons, Opera add-ons
-# -> dist/onion-lens-<version>-firefox.zip  Firefox AMO
+# -> dist/onion-lens-<version>-chrome.zip            Chrome Web Store, Edge Add-ons, Opera add-ons
+# -> dist/onion-lens-<version>-firefox.zip           Firefox AMO
+# -> dist/onion-lens-<version>-{chrome,firefox}/     unpacked folders for "Load unpacked" / about:debugging
+# -> dist/onion-lens-<version>-*-unpacked.zip        those folders zipped (attached to GitHub releases)
 ```
 
 Both zips come from the one `manifest.json`. Each drops the keys the other browser warns about. The Chrome zip has no `background.scripts` or `browser_specific_settings`, and the Firefox zip has no `background.service_worker`.
@@ -107,8 +109,8 @@ Both zips come from the one `manifest.json`. Each drops the keys the other brows
 
 | Workflow | Trigger | What it does |
 |---|---|---|
-| [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads both zips as a build artifact |
-| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** on `main` | tests → packs → lints → tags `vX.Y.Z` → publishes a GitHub Release with both zips and auto-generated notes |
+| [`ci.yml`](.github/workflows/ci.yml) | every push to `main` and every pull request | unit tests → pack → `web-ext` lint → uploads all zips as a build artifact |
+| [`release.yml`](.github/workflows/release.yml) | manual: **Actions → Release → Run workflow** on `main` | tests → packs → lints → tags `vX.Y.Z` → publishes a GitHub Release with the store zips, the unpacked zips and auto-generated notes |
 
 To cut a release:
 

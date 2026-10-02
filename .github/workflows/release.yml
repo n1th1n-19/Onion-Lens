@@ -53,4 +53,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           V: ${{ steps.version.outputs.version }}
-        run: gh release create "v$V" dist/*.zip --target "$GITHUB_SHA" --title "Onion Lens v$V" --generate-notes
+        run: |
+          cat > notes.md <<NOTES
+          ## Which file?
+
+          | File | Use it for |
+          |---|---|
+          | \`onion-lens-$V-chrome-unpacked.zip\` | **Chrome / Edge / Brave / Opera / Vivaldi**: extract it, open \`chrome://extensions\`, turn on *Developer mode* → **Load unpacked** → pick the extracted \`onion-lens-$V-chrome\` folder |
+          | \`onion-lens-$V-firefox-unpacked.zip\` | **Firefox**: extract it, open \`about:debugging#/runtime/this-firefox\` → **Load Temporary Add-on…** → pick \`manifest.json\` inside the extracted folder |
+          | \`onion-lens-$V-chrome.zip\` | Upload to the Chrome Web Store, Edge Add-ons or Opera add-ons |
+          | \`onion-lens-$V-firefox.zip\` | Upload to Firefox Add-ons (AMO) |
+
+          NOTES
+          gh release create "v$V" dist/*.zip --target "$GITHUB_SHA" --title "Onion Lens v$V" --notes-file notes.md --generate-notes
