@@ -1,0 +1,21 @@
+# Local agent memory
+.remember/
+
+# Packaging output
+*.zip
+*.xpi
+*.crx
+*.pem
+web-ext-artifacts/
+dist/
+
+# Tooling
+node_modules/
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
