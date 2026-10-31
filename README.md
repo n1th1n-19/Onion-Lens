@@ -160,12 +160,6 @@ Onion Lens collects nothing and sends nothing over the network.
 - Full-page shots taller than the browser's canvas limit (about 16k px) are cut off at the bottom, and the editor shows a note.
 - Pages that scroll an inner container instead of the window are captured as the visible area only.
 
-## A note before you dig in
-
-I apologize to whoever finds this repo: I built this entire project with AI.
-
-The idea, the decisions and the testing are mine, but most of the code was written with AI assistance. That means there may be rough edges, odd patterns, or things a careful developer would have done differently. If you're here to learn from the code, double-check anything before you copy it into your own work. If you spot something broken or questionable, issues and pull requests are very welcome. I'm still learning, and this project is part of that.
-
 ## License
 
 [MIT](LICENSE) © 2026 n1th1n-19
